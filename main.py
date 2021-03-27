@@ -1,10 +1,8 @@
+import time
 import socket
 from ports import getPacketLoggerPorts
-import psutil
-import win32process
-from dataframe import Player, processEntry, displayStats
+from dataframe import Player, processData, displayStats
 from utils import inject
-import time
 
 
 inject()
@@ -26,6 +24,6 @@ while True:
         pass
     cleanData = data.split("\r")
     for entry in cleanData:
-        processEntry(entry)
+        processData(entry)
 
 s.close()

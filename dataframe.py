@@ -1,5 +1,5 @@
-import threading
 import time
+import threading
 
 
 playerList = []
@@ -38,7 +38,7 @@ def createNewPlayer(player_name, player_id):
         pass
 
 
-def processEntry(data):
+def processData(data):
     if data.startswith('0 in 1'):
         player_data = data.split(' ')
         createNewPlayer(player_data[3], int(player_data[5]))

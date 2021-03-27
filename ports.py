@@ -21,6 +21,3 @@ def getPacketLoggerPorts() -> List[int]:
             if connection.laddr and connection.laddr.ip == "127.0.0.1":
                 ports.append(connection.laddr.port)
     return ports
-
-
-# print(getPacketLoggerPorts())
