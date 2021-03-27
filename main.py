@@ -6,11 +6,11 @@ from dataframe import Player, processEntry, displayStats
 from utils import inject
 
 
+inject()
+
 TCP_IP = '127.0.0.1'
 TCP_PORT = getPacketLoggerPorts()[0]
 BUFFER_SIZE = 2048
-
-inject()
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((TCP_IP, TCP_PORT))
