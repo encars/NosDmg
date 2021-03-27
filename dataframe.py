@@ -28,9 +28,6 @@ class Player():
 
         critChance = int(round(self.crits / self.hits, 2) * 100)
         return f'{str(critChance)}%'
-    
-    def calculateDPS(self):
-        
 
 
 def createNewPlayer(player_name, player_id):
