@@ -17,10 +17,20 @@ class Player():
         self.miss = miss
     
     def __repr__(self):
-        return f'{self.name} | Damage: {self.damage} | Max Damage: {self.max_damage} | Hits: {self.hits} | Crits: {self.crits} | Miss: {self.miss}'
+        return f'{self.name} | Damage: {self.damage} | Max Damage: {self.max_damage} | Hits: {self.hits} | Crits: {self.crits} | Crit Chance: {self.calculateCrit()} | Miss: {self.miss}'
 
     def __str__(self):
-        return f'{self.name} | Damage: {self.damage} | Max Damage: {self.max_damage} | Hits: {self.hits} | Crits: {self.crits} | Miss: {self.miss}'
+        return f'{self.name} | Damage: {self.damage} | Max Damage: {self.max_damage} | Hits: {self.hits} | Crits: {self.crits} | Crit Chance: {self.calculateCrit()} | Miss: {self.miss}'
+    
+    def calculateCrit(self):
+        if self.crits == 0 or self.hits == 0:
+            return('0%')
+
+        critChance = int(round(self.crits / self.hits, 2) * 100)
+        return f'{str(critChance)}%'
+    
+    def calculateDPS(self):
+        
 
 
 def createNewPlayer(player_name, player_id):
@@ -59,6 +69,7 @@ def processDamage(p_id, dmg, hitmode):
                 player.hits += 1
                 if hitmode == 3:
                     player.crits += 1
+                    player.calculateCrit()
             else:
                 player.miss += 1
 
