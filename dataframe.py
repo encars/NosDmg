@@ -1,4 +1,8 @@
-player_list = []
+import threading
+import time
+
+
+playerList = []
 
 
 class Player():
@@ -19,34 +23,33 @@ class Player():
         return f'{self.name} | Damage: {self.damage} | Max Damage: {self.max_damage} | Hits: {self.hits} | Crits: {self.crits} | Miss: {self.miss}'
 
 
-def create_new_player(player_name, player_id):
-    if not any(x.player_id == player_id for x in player_list):
+def createNewPlayer(player_name, player_id):
+    if not any(x.player_id == player_id for x in playerList):
         p = Player(player_id, player_name, 0, 0, 0, 0, 0)
-        player_list.append(p)
+        playerList.append(p)
     else:
-        print('Player already in list')
+        pass
 
 
-def process_entry(data):
+def processEntry(data):
     if data.startswith('0 in 1'):
         player_data = data.split(' ')
-        create_new_player(player_data[3], int(player_data[5]))
+        createNewPlayer(player_data[3], int(player_data[5]))
 
     if data.startswith('rdlst'):
         print(data)
 
     if data.startswith('0 su 1'):
         dmg_data = data.split(" ")
-        process_damage(int(dmg_data[3]), int(dmg_data[14]), int(dmg_data[15]))
+        processDamage(int(dmg_data[3]), int(dmg_data[14]), int(dmg_data[15]))
     
     if data.startswith('0 c_info'):
-        print(data)
         own_data = data.split(' ')
-        create_new_player(own_data[2], int(own_data[7]))
+        createNewPlayer(own_data[2], int(own_data[7]))
 
 
-def process_damage(p_id, dmg, hitmode):
-    for player in player_list:
+def processDamage(p_id, dmg, hitmode):
+    for player in playerList:
         if player.player_id == p_id:
             player.damage += dmg
             if dmg > player.max_damage:
@@ -60,12 +63,7 @@ def process_damage(p_id, dmg, hitmode):
                 player.miss += 1
 
 
-def print_list():
-    for player in player_list:
-        print(player)
-
-
-# p = Player(501, 'test', 500, 1000, 5, 2, 1)
-# print(str(p))
-# p.damage += 500
-# print(str(p))
+def displayStats():
+    print('')
+    print('Damagers:', *playerList, sep='\n- ')
+    threading.Timer(10.0, displayStats).start()

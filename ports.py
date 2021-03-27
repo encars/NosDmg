@@ -2,7 +2,7 @@ from typing import List
 from psutil import process_iter, AccessDenied, Process
 
 
-def get_processes(substring: str) -> List[Process]:
+def getProcesses(substring: str) -> List[Process]:
     processes = []
     for process in process_iter():
         try:
@@ -13,8 +13,8 @@ def get_processes(substring: str) -> List[Process]:
     return processes
 
 
-def get_nostale_packet_logger_ports() -> List[int]:
-    processes = get_processes("NostaleClientX.exe")
+def getPacketLoggerPorts() -> List[int]:
+    processes = getProcesses("NostaleClientX.exe")
     ports = []
     for process in processes:
         for connection in process.connections():
@@ -23,4 +23,4 @@ def get_nostale_packet_logger_ports() -> List[int]:
     return ports
 
 
-# print(get_nostale_packet_logger_ports())
+# print(get_packet_logger_ports())
