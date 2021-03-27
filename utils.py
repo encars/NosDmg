@@ -17,7 +17,7 @@ def getPid():
             if PROCESS_NAME in proc.name():
                 pid = proc.pid
         except:
-            print('Permission Error.')
+            pass
     return pid
 
 

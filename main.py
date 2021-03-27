@@ -4,9 +4,11 @@ import psutil
 import win32process
 from dataframe import Player, processEntry, displayStats
 from utils import inject
+import time
 
 
 inject()
+time.sleep(3)
 
 TCP_IP = '127.0.0.1'
 TCP_PORT = getPacketLoggerPorts()[0]
