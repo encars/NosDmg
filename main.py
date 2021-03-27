@@ -1,19 +1,21 @@
 import socket
-from ports import get_nostale_packet_logger_ports
+from ports import getPacketLoggerPorts
 import psutil
 import win32process
-from dataframe import Player, process_entry
+from dataframe import Player, processEntry, displayStats
 from utils import inject
 
 
 TCP_IP = '127.0.0.1'
-TCP_PORT = get_nostale_packet_logger_ports()[0]
+TCP_PORT = getPacketLoggerPorts()[0]
 BUFFER_SIZE = 2048
 
 inject()
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((TCP_IP, TCP_PORT))
+
+displayStats()
 
 while True:
     try:
@@ -22,6 +24,6 @@ while True:
         pass
     cleanData = data.split("\r")
     for entry in cleanData:
-        process_entry(entry)
+        processEntry(entry)
 
 s.close()
