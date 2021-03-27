@@ -23,4 +23,4 @@ def getPacketLoggerPorts() -> List[int]:
     return ports
 
 
-# print(get_packet_logger_ports())
+# print(getPacketLoggerPorts())
