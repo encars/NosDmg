@@ -71,7 +71,12 @@ def processDamage(p_id, dmg, hitmode):
                 player.miss += 1
 
 
+def sortList():
+    playerList.sort(key=lambda x: x.damage, reverse=True)
+
+
 def displayStats():
+    sortList()
     print('')
     print('Damagers:', *playerList, sep='\n- ')
     threading.Timer(10.0, displayStats).start()
