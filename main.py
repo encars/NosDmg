@@ -24,6 +24,9 @@ while True:
         pass
     cleanData = data.split("\r")
     for entry in cleanData:
-        processData(entry)
+        try: 
+            processData(entry)
+        except:
+            print(f'Error processing the following data: {entry}')
 
 s.close()
