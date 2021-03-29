@@ -30,6 +30,8 @@ def main():
             except:
                 print(f'Error processing the following data: {entry}')
 
+    s.close()
+
 
 if __name__ == '__main__':
     main()
