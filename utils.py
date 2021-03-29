@@ -6,8 +6,8 @@ import os
 PROCESS_NAME = 'NostaleClientX.exe'
 
 
-def getPacketLoggerPath(nostale_pid):
-    process = psutil.Process(nostale_pid)
+def getPacketLoggerPath(pid):
+    process = psutil.Process(pid)
     return os.path.dirname(process.exe()) + '/PacketLogger.dll'
 
 

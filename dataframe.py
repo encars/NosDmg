@@ -71,6 +71,11 @@ def processDamage(p_id, dmg, hitmode):
                 player.miss += 1
 
 
+def clearList():
+    global playerList
+    playerList = []
+
+
 def sortList():
     playerList.sort(key=lambda x: x.damage, reverse=True)
 

@@ -1,5 +1,6 @@
 from typing import List
 from psutil import process_iter, AccessDenied, Process
+from utils import PROCESS_NAME
 
 
 def getProcesses(substring: str) -> List[Process]:
@@ -14,7 +15,7 @@ def getProcesses(substring: str) -> List[Process]:
 
 
 def getPacketLoggerPorts() -> List[int]:
-    processes = getProcesses("NostaleClientX.exe")
+    processes = getProcesses(PROCESS_NAME)
     ports = []
     for process in processes:
         for connection in process.connections():
