@@ -1,8 +1,7 @@
-import time
-import threading
-
-
 playerList = []
+bossIDs = [388, 414, 282, 284, 285, 289, 286, 1028, 1046, 1044, 1058, 2504, 2514, 2574, 2305, 2034, 2049, 2326, 2619, 2639, 3027, 3028, 3029, 3124, 563, 629, 624, 577]
+bossUIDs = []
+BOSSMODE = False
 
 
 class Player():
@@ -30,29 +29,38 @@ class Player():
         return f'{str(critChance)}%'
 
 
+def processData(data):
+    if data.startswith('0 in 1'):
+        player_data = data.split(' ')
+        createNewPlayer(player_data[3], int(player_data[5]))
+    
+    if data.startswith('0 in 3'):
+        boss_data = data.split(' ')
+        if boss_data[3] in bossIDs:
+            bossUIDs.append(boss_data[4])
+
+    if data.startswith('rdlst'):
+        pass
+
+    if data.startswith('0 su 1'):
+        dmg_data = data.split(" ")
+        if BOSSMODE:
+            if int(dmg_data[5]) in bossUIDs:
+                processDamage(int(dmg_data[3]), int(dmg_data[14]), int(dmg_data[15]))
+        else:
+            processDamage(int(dmg_data[3]), int(dmg_data[14]), int(dmg_data[15]))
+    
+    if data.startswith('0 c_info'):
+        own_data = data.split(' ')
+        createNewPlayer(own_data[2], int(own_data[7]))
+
+
 def createNewPlayer(player_name, player_id):
     if not any(x.player_id == player_id for x in playerList):
         p = Player(player_id, player_name, 0, 0, 0, 0, 0)
         playerList.append(p)
     else:
         pass
-
-
-def processData(data):
-    if data.startswith('0 in 1'):
-        player_data = data.split(' ')
-        createNewPlayer(player_data[3], int(player_data[5]))
-
-    if data.startswith('rdlst'):
-        print(data)
-
-    if data.startswith('0 su 1'):
-        dmg_data = data.split(" ")
-        processDamage(int(dmg_data[3]), int(dmg_data[14]), int(dmg_data[15]))
-    
-    if data.startswith('0 c_info'):
-        own_data = data.split(' ')
-        createNewPlayer(own_data[2], int(own_data[7]))
 
 
 def processDamage(p_id, dmg, hitmode):
@@ -71,17 +79,15 @@ def processDamage(p_id, dmg, hitmode):
                 player.miss += 1
 
 
-def clearList():
-    global playerList
-    playerList = []
+def refreshMode(mode):
+    global BOSSMODE
+    BOSSMODE = mode
 
 
 def sortList():
     playerList.sort(key=lambda x: x.damage, reverse=True)
 
 
-def displayStats():
-    sortList()
-    print('')
-    print('Damagers:', *playerList, sep='\n- ')
-    threading.Timer(10.0, displayStats).start()
+def clearList():
+    global playerList
+    playerList = []
