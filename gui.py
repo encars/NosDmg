@@ -10,7 +10,6 @@ BOSSMODE = False
 
 def guiSetup(master):
     master = master
-    master.iconbitmap('icon.ico')
     master.title('Dmg Calculator')
     master.geometry('1000x500')
 
