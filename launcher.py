@@ -21,10 +21,8 @@ def launch():
     s.connect((TCP_IP, TCP_PORT))
 
     while RUNNING:
-        try:
-            data = s.recv(BUFFER_SIZE).decode("utf-8")
-        except UnicodeDecodeError:
-            pass
+        data = s.recv(BUFFER_SIZE).decode(encoding='utf-8', errors='replace')
+        print(data)
         cleanData = data.split("\r")
         for entry in cleanData:
             try:
