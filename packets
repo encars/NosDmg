@@ -49,6 +49,20 @@ fire 563
 wasser 629
 light 624
 schatten 577
+hase 2317
 
 
 c_info »Falco« - -1 9206.918 Scoundrels 153620 0 0 3 98 1 27 0 26 0 0 0 0 7583
+
+Damage taken:
+    Attacker Receiver
+su 3 14941 1 4739 0 9 11 0 0 0 1 48 1349 0 0
+
+großer hp pot:
+u_i 1 4739 1 8 0 0 
+
+fulli:
+u_i 1 4739 1 2 0 0 
+
+hase boss:
+in 3 2317 2552488 21 20 1 100 100 0 0 0 -1 1 0 -1 - 0 -1 0 0 0 0 0 0 0 0 0 0 0

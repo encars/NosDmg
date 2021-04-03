@@ -1,12 +1,12 @@
 playerList = []
-bossIDs = [388, 414, 282, 284, 285, 289, 286, 1028, 1046, 1044, 1058, 2504, 2514, 2574, 2305, 2034, 2049, 2326, 2619, 2639, 3027, 3028, 3029, 3124, 563, 629, 624, 577]
+bossIDs = [388, 414, 282, 284, 285, 289, 286, 1028, 1046, 1044, 1058, 2504, 2514, 2574, 2305, 2034, 2049, 2326, 2619, 2639, 3027, 3028, 3029, 3124, 563, 629, 624, 577, 2317]
 bossUIDs = []
 BOSSMODE = False
 
 
 class Player():
 
-    def __init__(self, player_id, name, damage, max_damage, hits, crits, miss):
+    def __init__(self, player_id, name, damage, max_damage, hits, crits, miss, dmg_taken, max_dmg_taken):
         self.player_id = player_id
         self.name = name
         self.damage = damage
@@ -14,12 +14,14 @@ class Player():
         self.hits = hits
         self.crits = crits
         self.miss = miss
+        self.taken = dmg_taken
+        self.max_taken = max_dmg_taken
     
     def __repr__(self):
-        return f'{self.name} | Damage: {self.damage} | Max Damage: {self.max_damage} | Hits: {self.hits} | Crits: {self.crits} | Crit Chance: {self.calculateCrit()} | Miss: {self.miss}'
+        return f'{self.name} | Damage: {self.damage} | Max Damage: {self.max_damage} | Hits: {self.hits} | Crits: {self.crits} | Crit Chance: {self.calculateCrit()} | Miss: {self.miss} | Damage taken: {self.taken} | Max Damage taken: {self.max_taken}'
 
     def __str__(self):
-        return f'{self.name} | Damage: {self.damage} | Max Damage: {self.max_damage} | Hits: {self.hits} | Crits: {self.crits} | Crit Chance: {self.calculateCrit()} | Miss: {self.miss}'
+        return f'{self.name} | Damage: {self.damage} | Max Damage: {self.max_damage} | Hits: {self.hits} | Crits: {self.crits} | Crit Chance: {self.calculateCrit()} | Miss: {self.miss} | Damage taken: {self.taken} | Max Damage taken: {self.max_taken}'
     
     def calculateCrit(self):
         if self.crits == 0 or self.hits == 0:
@@ -36,20 +38,23 @@ def processData(data):
     
     if data.startswith('0 in 3'):
         boss_data = data.split(' ')
-        if boss_data[3] in bossIDs:
-            bossUIDs.append(boss_data[4])
+        if int(boss_data[3]) in bossIDs:
+            bossUIDs.append(int(boss_data[4]))
 
     if data.startswith('rdlst'):
         pass
 
     if data.startswith('0 su 1'):
-        dmg_data = data.split(" ")
+        dmg_data = data.split(' ')
         if BOSSMODE:
-            print('bossmode working')
             if int(dmg_data[5]) in bossUIDs:
                 processDamage(int(dmg_data[3]), int(dmg_data[14]), int(dmg_data[15]))
         else:
             processDamage(int(dmg_data[3]), int(dmg_data[14]), int(dmg_data[15]))
+    
+    if data.startswith('0 su 3'):
+        receive_data = data.split(' ')
+        processTaken(int(receive_data[5]), int(receive_data[14]))
     
     if data.startswith('0 c_info'):
         own_data = data.split(' ')
@@ -58,7 +63,7 @@ def processData(data):
 
 def createNewPlayer(player_name, player_id):
     if not any(x.player_id == player_id for x in playerList):
-        p = Player(player_id, player_name, 0, 0, 0, 0, 0)
+        p = Player(player_id, player_name, 0, 0, 0, 0, 0, 0, 0)
         playerList.append(p)
     else:
         pass
@@ -78,6 +83,14 @@ def processDamage(p_id, dmg, hitmode):
                     player.calculateCrit()
             else:
                 player.miss += 1
+
+
+def processTaken(p_id, dmg):
+    for player in playerList:
+        if player.player_id == p_id:
+            player.taken += dmg
+            if dmg > player.max_taken:
+                player.max_taken = dmg
 
 
 def refreshMode(mode):
