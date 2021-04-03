@@ -1,4 +1,6 @@
 import dataframe
+import time
+import threading
 from tkinter import Tk, Label, Button, ttk, Scrollbar
 from dataframe import *
 from launcher import exitProgram
@@ -6,6 +8,7 @@ from launcher import exitProgram
 
 root = Tk()
 BOSSMODE = False
+REFRESH = False
 
 
 def guiSetup(master):
@@ -39,11 +42,15 @@ def guiSetup(master):
     refresh.place(x=810, y=7, height=100, width=180)
 
     clear = Button(master, text='Clear', command=clearData)
-    clear.place(x=810, y=150, height=50, width=180)
+    clear.place(x=810, y=110, height=50, width=180)
 
     global bossModeButton
     bossModeButton = Button(master, text='Boss only: OFF', command=setBossMode)
-    bossModeButton.place(x=810, y=250, height=50, width=180)
+    bossModeButton.place(x=810, y=175, height=50, width=180)
+
+    global autoRefreshButton
+    autoRefreshButton = Button(master, text='Auto refresh: OFF', command=setRefresh)
+    autoRefreshButton.place(x=810, y=228, height=50, width=180)
 
     quitButton = Button(master, text='Exit', command=kill)
     quitButton.place(x=940, y=440, height=50, width=50)
@@ -73,10 +80,27 @@ def setBossMode():
     global BOSSMODE
     BOSSMODE = not BOSSMODE
     if BOSSMODE:
-        bossModeButton.configure(text="Boss only: ON")
+        bossModeButton.configure(text='Boss only: ON')
     else:
-        bossModeButton.configure(text="Boss only: OFF")
+        bossModeButton.configure(text='Boss only: OFF')
     refreshMode(BOSSMODE)
+
+
+def setRefresh():
+    global REFRESH
+    REFRESH = not REFRESH
+    if REFRESH:
+        autoRefreshButton.configure(text='Auto refresh: ON')
+        refreshThread = threading.Thread(target=autoRefresh).start()
+    else:
+        autoRefreshButton.configure(text='Auto refresh: OFF')
+
+
+def autoRefresh():
+    global REFRESH
+    while REFRESH:
+        refreshData()
+        time.sleep(10)
 
 
 def runGui():

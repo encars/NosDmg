@@ -4,9 +4,7 @@ from gui import runGui
 
 
 def main():
-    infoThread = threading.Thread(target=launch)
-    infoThread.start()
-
+    infoThread = threading.Thread(target=launch).start()
     runGui()
 
 
