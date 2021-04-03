@@ -22,7 +22,6 @@ def launch():
 
     while RUNNING:
         data = s.recv(BUFFER_SIZE).decode(encoding='utf-8', errors='replace')
-        print(data)
         cleanData = data.split("\r")
         for entry in cleanData:
             try:

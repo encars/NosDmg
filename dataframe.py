@@ -45,6 +45,7 @@ def processData(data):
     if data.startswith('0 su 1'):
         dmg_data = data.split(" ")
         if BOSSMODE:
+            print('bossmode working')
             if int(dmg_data[5]) in bossUIDs:
                 processDamage(int(dmg_data[3]), int(dmg_data[14]), int(dmg_data[15]))
         else:
