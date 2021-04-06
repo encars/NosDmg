@@ -21,7 +21,7 @@ def guiSetup(master):
 
     global tree
     tree = ttk.Treeview(treeframe)
-    colNames = ['Name', 'Dmg', 'Max dmg', 'Hits', 'Crit', 'Crit chance', 'Miss', 'Dmg taken', 'Max dmg taken']
+    colNames = ['Name', 'Dmg', 'Max dmg', 'Hits', 'Crits', 'Crit chance', 'Miss', 'Dmg taken', 'Max dmg taken']
     tree['columns'] = colNames
     tree['show'] = 'headings'
 
