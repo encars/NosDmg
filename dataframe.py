@@ -41,9 +41,6 @@ def processData(data):
         if int(boss_data[3]) in bossIDs:
             bossUIDs.append(int(boss_data[4]))
 
-    if data.startswith('rdlst'):
-        pass
-
     if data.startswith('0 su 1'):
         dmg_data = data.split(' ')
         if BOSSMODE:
@@ -65,8 +62,6 @@ def createNewPlayer(player_name, player_id):
     if not any(x.player_id == player_id for x in playerList):
         p = Player(player_id, player_name, 0, 0, 0, 0, 0, 0, 0)
         playerList.append(p)
-    else:
-        pass
 
 
 def processDamage(p_id, dmg, hitmode):
