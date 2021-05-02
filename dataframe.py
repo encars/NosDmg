@@ -1,3 +1,6 @@
+from fishing import start_fish
+
+
 playerList = []
 bossIDs = [388, 414, 282, 284, 285, 289, 286, 1028, 1046, 1044, 1058, 2504, 2514, 2574, 2305, 2034, 2049, 2326, 2619, 2639, 3027, 3028, 3029, 3124, 563, 629, 624, 577, 2317]
 bossUIDs = []
@@ -56,6 +59,11 @@ def processData(data):
     if data.startswith('0 c_info'):
         own_data = data.split(' ')
         createNewPlayer(own_data[2], int(own_data[7]))
+
+    if data.startswith('0 guri 6'):
+        fishing_data = data.split(' ')
+        start_fish(fishing_data)
+
 
 
 def createNewPlayer(player_name, player_id):
