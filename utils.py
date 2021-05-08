@@ -3,9 +3,7 @@ import psutil
 import os
 from typing import List
 from psutil import process_iter, AccessDenied, Process
-
-
-PROCESS_NAME = 'NostaleClientX.exe'
+import settings
 
 
 def getProcesses(substring: str) -> List[Process]:
@@ -20,7 +18,7 @@ def getProcesses(substring: str) -> List[Process]:
 
 
 def getPacketLoggerPorts() -> List[int]:
-    processes = getProcesses(PROCESS_NAME)
+    processes = getProcesses(settings.PROCESS_NAME)
     ports = []
     for process in processes:
         for connection in process.connections():
@@ -37,7 +35,7 @@ def getPacketLoggerPath(pid):
 def getPid():
     for proc in psutil.process_iter():
         try:
-            if PROCESS_NAME in proc.name():
+            if settings.PROCESS_NAME in proc.name():
                 pid = proc.pid
         except:
             pass

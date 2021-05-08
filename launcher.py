@@ -2,14 +2,10 @@ import time
 import socket
 from utils import inject, getPacketLoggerPorts
 from dataframe import processData
-
-
-RUNNING = True
+import settings
 
 
 def launch():
-    global RUNNING
-    
     inject()
     time.sleep(3)
     
@@ -20,7 +16,7 @@ def launch():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((TCP_IP, TCP_PORT))
 
-    while RUNNING:
+    while settings.RUNNING:
         data = s.recv(BUFFER_SIZE).decode(encoding='utf-8', errors='replace')
         cleanData = data.split("\r")
         for entry in cleanData:
@@ -31,5 +27,4 @@ def launch():
 
 
 def exitProgram():
-    global RUNNING
-    RUNNING = False
+    settings.RUNNING = False
