@@ -4,11 +4,10 @@ import threading
 from tkinter import Tk, Label, Button, ttk, Scrollbar
 from dataframe import *
 from launcher import exitProgram
+import settings
 
 
 root = Tk()
-BOSSMODE = False
-REFRESH = False
 
 
 def guiSetup(master):
@@ -52,6 +51,10 @@ def guiSetup(master):
     autoRefreshButton = Button(master, text='Auto refresh: OFF', command=setRefresh)
     autoRefreshButton.place(x=810, y=228, height=50, width=180)
 
+    global fishingButton
+    fishingButton = Button(master, text='Fishing Bot: OFF', command=setFishing)
+    fishingButton.place(x=10, y=310, height=180, width=180)
+
     quitButton = Button(master, text='Exit', command=kill)
     quitButton.place(x=940, y=440, height=50, width=50)
 
@@ -77,28 +80,32 @@ def clearData():
 
 
 def setBossMode():
-    global BOSSMODE
-    BOSSMODE = not BOSSMODE
-    if BOSSMODE:
+    settings.BOSSMODE = not settings.BOSSMODE
+    if settings.BOSSMODE:
         bossModeButton.configure(text='Boss only: ON')
     else:
         bossModeButton.configure(text='Boss only: OFF')
-    refreshMode(BOSSMODE)
 
 
 def setRefresh():
-    global REFRESH
-    REFRESH = not REFRESH
-    if REFRESH:
+    settings.REFRESH = not settings.REFRESH
+    if settings.REFRESH:
         autoRefreshButton.configure(text='Auto refresh: ON')
         refreshThread = threading.Thread(target=autoRefresh).start()
     else:
         autoRefreshButton.configure(text='Auto refresh: OFF')
 
 
+def setFishing():
+    settings.FISHING = not settings.FISHING
+    if settings.FISHING:
+        fishingButton.configure(text='Fishing Bot: ON')
+    else:
+        fishingButton.configure(text='Fishing Bot: OFF')
+
+
 def autoRefresh():
-    global REFRESH
-    while REFRESH:
+    while settings.REFRESH:
         refreshData()
         time.sleep(10)
 
