@@ -16,4 +16,4 @@ def fish(data):
 
 
 def start_fish(data):
-    fishingThread = threading.Thread(target=fish, args=[data]).start()
+    threading.Thread(target=fish, args=[data]).start()

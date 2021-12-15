@@ -70,8 +70,8 @@ def loadData():
 
 def refreshData():
     tree.delete(*tree.get_children())
-    sortList()
     loadData()
+    sortList()
 
 
 def clearData():
@@ -91,7 +91,7 @@ def setRefresh():
     settings.REFRESH = not settings.REFRESH
     if settings.REFRESH:
         autoRefreshButton.configure(text='Auto refresh: ON')
-        refreshThread = threading.Thread(target=autoRefresh).start()
+        threading.Thread(target=autoRefresh).start()
     else:
         autoRefreshButton.configure(text='Auto refresh: OFF')
 
@@ -111,7 +111,7 @@ def autoRefresh():
 
 
 def runGui():
-    dmgWindow = guiSetup(root)
+    guiSetup(root)
     root.mainloop()
 
 
