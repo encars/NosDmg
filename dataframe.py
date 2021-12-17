@@ -34,6 +34,14 @@ class Player():
         return f'{str(critChance)}%'
 
 
+def createNewPlayer(is_user, player_name, player_id):
+    if not any(x.player_id == player_id for x in playerList):
+        if is_user:
+            settings.USER_ID = player_id
+        p = Player(player_id, player_name, 0, 0, 0, 0, 0, 0, 0)
+        playerList.append(p)
+
+
 def processData(data):
     if data.startswith('0 in 1'):
         player_data = data.split(' ')
@@ -63,15 +71,6 @@ def processData(data):
     if data.startswith('0 guri 6'):
         fishing_data = data.split(' ')
         start_fish(fishing_data)
-
-
-
-def createNewPlayer(is_user, player_name, player_id):
-    if not any(x.player_id == player_id for x in playerList):
-        if is_user:
-            settings.USER_ID = player_id
-        p = Player(player_id, player_name, 0, 0, 0, 0, 0, 0, 0)
-        playerList.append(p)
 
 
 def processDamage(p_id, dmg, hitmode):
