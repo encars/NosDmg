@@ -1,7 +1,7 @@
 import dataframe
 import time
 import threading
-from tkinter import Tk, Label, Button, ttk, Scrollbar
+from tkinter import Tk, Button, ttk, Scrollbar
 from dataframe import *
 from launcher import exitProgram
 import settings
